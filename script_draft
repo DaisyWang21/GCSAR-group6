@@ -1,0 +1,33 @@
+library(tidyverse)
+
+setwd("/set/the/path")
+getwd()
+
+# part.1: Load the two data sets as objects named as described below.
+#---Megan---
+# both files are saved within the “data” folder within my working directory
+ebird <- read_csv("EBbird_IPEDS_UNITID_MEPANCFL_Jan23-May23_v3")
+view(ebird)
+
+ipeds <- read_csv("IPEDS_combined_MEPANCFL_v4.csv")
+view(ipeds)
+# ------
+
+# part.2: 
+# ---Daisy---
+# Count the number of unique species per sampling event
+species_richness <- ebird |> 
+  group_by(UNITID, `SAMPLING EVENT IDENTIFIER`) |> 
+  summarise(richness = n_distinct(`SCIENTIFIC NAME`)) |> 
+  ungroup()
+
+# Calculate the mean species richness for each college campus (UNITID) across sampling events
+mean_richness <- species_richness |> 
+  group_by(UNITID) |> 
+  summarise(mean_richness = mean(richness))
+
+view(mean_richness)
+
+# part.3: Join the species richness data to the ipeds data.
+
+#------
