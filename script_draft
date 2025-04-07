@@ -6,7 +6,7 @@ getwd()
 # part.1: Load the two data sets as objects named as described below.
 #---Megan---
 # both files are saved within the “data” folder within my working directory
-ebird <- read_csv("EBbird_IPEDS_UNITID_MEPANCFL_Jan23-May23_v3")
+ebird <- read_csv("EBbird_IPEDS_UNITID_MEPANCFL_Jan23-May23_v3.csv")
 view(ebird)
 
 ipeds <- read_csv("IPEDS_combined_MEPANCFL_v4.csv")
