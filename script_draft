@@ -29,5 +29,91 @@ mean_richness <- species_richness |>
 view(mean_richness)
 
 # part.3: Join the species richness data to the ipeds data.
+# Part 3: Join the species richness data to the ipeds data
+# Perform the join and store in ipeds
 
-#------
+ipeds <- ipeds |> 
+  left_join(mean_richness, by = "UNITID")
+
+ipeds_clean <- ipeds |>
+  filter(!is.na(mean_impervious), !is.na(mean_richness))
+
+# Check the number of rows
+nrow(ipeds)  # Number of rows in ipeds after join
+
+#-----
+#---Joe---
+#part 4.
+# a. What is your hypothesis for the relationship?
+#Impervious surfaces: In this context, impervious surfaces refer to ground surfaces that don't
+#allow for water to penetrate soil. Developed structures such as buildings and roads.
+# Hypothesis: We hypothesize that campuses with a higher percentage of impervious surfaces 
+# will have lower bird species richness. This is because impervious surfaces reduce natural
+#habitats, which can limit biodiversity.
+
+#b. Describe the relationship across colleges? Is it linear or nonlinear? Does transforming #the data change the relationship?
+ggplot(ipeds, aes(x = mean_impervious, y = mean_richness)) +
+  geom_point() +
+  geom_smooth() +
+  labs(
+    title = "Relationship Between Impervious Surface and Bird Species Richness",
+    x = "Mean Impervious Surface (%)",
+    y = "Mean Bird Species Richness"
+  )
+#-----
+#---Tolu---
+#Tolu a.
+#The relationship across colleges is non-linear. 
+#The curve takes a slight upturn at the 25 to 50 percent imperviousness levels. 
+
+#Tolu a. 
+transformed_data<-filter(ipeds, mean_richness <= 20)
+
+ggplot(transformed_data, aes(x = mean_impervious, y = mean_richness)) +
+  geom_point() +
+  geom_smooth() +
+  labs(
+    title = "Relationship Between Impervious Surface and Bird Species Richness",
+    x = "Mean Impervious Surface (%)",
+    y = "Mean Bird Species Richness"
+  )
+#After removing some outliers, the curve changed slightly. 
+#There is a pronounced drop at the 50% imperviousness mark.
+#However, the relationship between the two variables did not change.
+
+#c. What is a mechanism that might cause the observed relationship? #Tolu A
+#Adaptation might cause a slight increase of mean bird species richness at around 50% mean impervious surface. 
+#Birds that are more vulnerable to habitat destruction, food chain disruption, and other disruption may die off at around this level of imperviousness.
+#Birds that are more hardy, especially non-native birds, may fare better in this environment because of fewer predators due to the food chain disruption. 
+#To add on, some native birds may learn to adapt to the new moderately impervious habitat. 
+
+#d. Does the relationship vary by taxonomic order? #Tolu A
+species_richness2 <- ebird |> 
+  select(UNITID,ORDER) 
+
+view(species_richness2)
+
+ipeds <- ipeds |> 
+  left_join(species_richness2, by = "UNITID")
+
+# View the result
+view(ipeds)
+
+
+base<- ggplot(ipeds, aes(x = mean_impervious, y = mean_richness, color=ORDER)) +
+  geom_point() +
+  labs(
+    title = "Relationship Between Impervious Surface and Bird Species Richness",
+    x = "Mean Impervious Surface (%)",
+    y = "Mean Bird Species Richness"
+  )
+base + facet_wrap(~ORDER, ncol = 3) + theme(legend.position = "none")
+
+
+#The relationship does vary by Taxonomic order.
+#The Passeriformes, Accipitriformes, Anseriformes, Piciformes, and Cathartiformes tend to be adaptable to any impervious surface but do dwindle in richness as the percentage goes beyond the moderate levels of imperviousness (approximately above 50%). 
+#These taxonomic orders even see peaks in richness at moderate levels. 
+
+#On the other hand, Cuculiformes, Strigoformes, Gaviiformes, and Psittaciformes tend to have a weird trend of having more species richness at moderate levels of imperviousness and do not exist at the extremes.
+
+
