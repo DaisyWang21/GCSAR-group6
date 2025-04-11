@@ -3,8 +3,8 @@ library(tidyverse)
 setwd("/set/the/path")
 getwd()
 
-# part.1: Load the two data sets as objects named as described below.
-#---Megan---
+# part 1.: Load the two data sets as objects named as described below.
+#--- Megan ---
 # both files are saved within the “data” folder within my working directory
 ebird <- read_csv("EBbird_IPEDS_UNITID_MEPANCFL_Jan23-May23_v3.csv")
 view(ebird)
@@ -13,7 +13,7 @@ ipeds <- read_csv("IPEDS_combined_MEPANCFL_v4.csv")
 view(ipeds)
 # ------
 
-# part.2: 
+# part 2.: 
 # ---Daisy---
 # Count the number of unique species per sampling event
 species_richness <- ebird |> 
@@ -28,8 +28,9 @@ mean_richness <- species_richness |>
 
 view(mean_richness)
 
-# part.3: Join the species richness data to the ipeds data.
-# Part 3: Join the species richness data to the ipeds data
+# part 3.: 
+# --- Levi ---
+# Join the species richness data to the ipeds data
 # Perform the join and store in ipeds
 
 ipeds <- ipeds |> 
@@ -41,9 +42,8 @@ ipeds_clean <- ipeds |>
 # Check the number of rows
 nrow(ipeds)  # Number of rows in ipeds after join
 
-#-----
-#---Joe---
-#part 4.
+#--- Joe ---
+# part 4.
 # a. What is your hypothesis for the relationship?
 #Impervious surfaces: In this context, impervious surfaces refer to ground surfaces that don't
 #allow for water to penetrate soil. Developed structures such as buildings and roads.
@@ -60,8 +60,8 @@ ggplot(ipeds, aes(x = mean_impervious, y = mean_richness)) +
     x = "Mean Impervious Surface (%)",
     y = "Mean Bird Species Richness"
   )
-#-----
-#---Tolu---
+
+#--- Tolu ---
 #Tolu a. (Tolu's comment on 4.a)
 #The relationship across colleges is non-linear. 
 #The curve takes a slight upturn at the 25 to 50 percent imperviousness levels. 
@@ -116,4 +116,6 @@ base + facet_wrap(~ORDER, ncol = 3) + theme(legend.position = "none")
 
 #On the other hand, Cuculiformes, Strigoformes, Gaviiformes, and Psittaciformes tend to have a weird trend of having more species richness at moderate levels of imperviousness and do not exist at the extremes.
 
+# part 5.:
+# Each team member should then explore at least one relationship between bird species richness and IPEDS variables by making a nice looking figure.
 
