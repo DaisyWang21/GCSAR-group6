@@ -62,7 +62,7 @@ ggplot(ipeds, aes(x = mean_impervious, y = mean_richness)) +
   )
 #-----
 #---Tolu---
-#Tolu a.
+#Tolu a. (Tolu's comment on 4.a)
 #The relationship across colleges is non-linear. 
 #The curve takes a slight upturn at the 25 to 50 percent imperviousness levels. 
 
